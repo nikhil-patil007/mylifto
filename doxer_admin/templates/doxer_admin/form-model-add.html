@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> {% include 'home/head.html' %} </head>
+  <style>
+    #contact_form label {
+      text-align: left;
+      margin-right: 60%;
+      color: red;
+    }
+
+    img {
+      width: 550px;
+      height: 400px;
+    }
+  </style>
+  <body id='bodys'>
+    <div class="container-scroller">
+      <!-- partial:../../partials/_navbar.html --> {% include 'home/header.html' %}
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html --> {% include 'home/sider.html' %}
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title"> {{type}} Models Add Forms </h3>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item" style='color:green;'>
+                    <b>Add Model Form</b>
+                  </li>
+                  <li class="breadcrumb-item active" aria-current="page">{{type}}</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                      <ul class="breadcrumb justify-content-end">
+                          <li><a class='btn btn-sm btn-success btn-rounded' href="{% url 'doxer_admin:manage_brand' tt=type %}">Back</a>&nbsp;</li>
+                        </ul>
+                    <div role="alert" id='errormsg'></div> 
+                    <!--<h4 class="card-title">All Brands</h4>-->
+                      <form class="forms-sample" action="{% url 'doxer_admin:add_vehical_store' tt=type %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                      <div class="form-group">
+                        <label for="exampleInputName1">Model Name</label>
+                        <input type="text" class="form-control" id="model_name" name="model_name" placeholder="Name">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Select Company Name</label>
+                        <select class="form-control" id="company_name" name="company_name">
+                          <option selected disabled>Select Company Name</option>
+                          {% for i in barnd %}
+                          <option value="{{i.id}}">{{i.brand}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputCity1">Model Image</label>
+                        <input type="file" class="form-control" id="model_image" name="model_image" placeholder="Location">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleTextarea1">Models Colors</label>
+                        <select class="form-control" id="colordrop" multiple name="colordrop">
+                          {% for i in colors %}
+                            <option value="{{i.id}}">{{i.vehical_color}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      {% if type == "trucks" or type == "Trucks" %}
+                      <div class="form-group">
+                        <label for="exampleTextarea1">Models Dimension</label>
+                        <select class="form-control" id="dimensiondrop" multiple name="dimensiondrop">
+                          {% for i in dimension %}
+                            <option value="{{i.id}}">{{i.dimension}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      {% else %}
+                      <input type="hidden" name="dimensiondrop">
+                      {% endif %}
+                      <button type="submit" class="btn btn-success mr-2">Submit</button>
+                      <button type="reset" class="btn btn-light">Cancel</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html --> {% include 'home/foot.html' %} 
+          <script>
+          </script>
+  </body>
+</html>

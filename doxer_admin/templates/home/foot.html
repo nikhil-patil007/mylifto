@@ -1,0 +1,130 @@
+{% load static %}
+<footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+      <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © doxer.com 2021 Developed By <a href="https://maquinistas.in/" target="_blank">maquinistas.in</a></span>
+    </div>
+  </footer>
+  <!-- partial -->
+</div>
+<!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script>
+//   document.addEventListener('contextmenu', event => event.preventDefault());
+</script>
+<script>
+  function redirect(){
+     window.location.href = "/doxer-admin/admin-logout/";
+  }
+  // setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+<div class="container" hidden>
+  <div class="display-date">
+    <span id="day">day</span>,
+    <span id="daynum">00</span>
+    <span id="month">month</span>
+    <span id="year">0000</span>
+  </div>
+  <div class="display-time"></div>
+</div>
+<p id='pdate' hidden><span id='spanyear'></span>-<span id="spanmonth"></span>-<span id='spandd'></span> <span id='spantime'></span></p>
+<script>
+$( document ).ready(function() {
+    const displayTime = document.querySelector(".display-time");
+    function showTime() {
+    let time = new Date();
+    displayTime.innerText = time.toLocaleTimeString("en-US", { hour12: false });
+    setTimeout(showTime, 1000);
+    }
+    
+    showTime();
+    
+    // Date
+    function updateDate() {
+    let today = new Date();
+    
+    // return number
+    let dayName = today.getDay(),
+    dayNum = today.getDate(),
+    month = today.getMonth(),
+    year = today.getFullYear();
+    const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+    ];
+    const dayWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    ];
+    // value -> ID of the html element
+    const IDCollection = ["day", "daynum", "month", "year"];
+    // return value array with number as a index
+    const val = [dayWeek[dayName], dayNum, month, year];
+    for (let i = 0; i < IDCollection.length; i++) {
+    document.getElementById(IDCollection[i]).firstChild.nodeValue = val[i];
+    }
+    }
+    
+    updateDate();
+
+    setInterval(showTime, 1000);
+    function showTime() {
+    let today = new Date();
+    dayName = today.getDay(),
+    dayNum = today.getDate(),
+    month = today.getMonth(),
+    year = today.getFullYear();
+    var time = displayTime.innerText = today.toLocaleTimeString("en-US", { hour12: false });
+    $("#spandd").text(dayNum);
+    $("#spanmonth").text(month);
+    $("#spanyear").text(year);
+    $("#spantime").text(time);
+    var datses = $("#pdate").text();
+    $("#Currentdate").val(datses);
+    }
+});
+</script>
+
+<script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="{% static 'vendors/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'vendors/moment/moment.min.js' %}"></script>
+<script src="{% static 'vendors/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'vendors/chartist/chartist.min.js' %}"></script>
+<script src="{% static 'vendors/select2/select2.min.js' %}"></script>
+<script src="{% static 'vendors/typeahead.js/typeahead.bundle.min.js' %}"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="{% static 'js/off-canvas.js' %}"></script>
+<script src="{% static 'js/misc.js' %}"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
+<script src="{% static 'js/dashboard.js' %}"></script>
+<script src="{% static 'js/typeahead.js' %}"></script>
+<script src="{% static 'js/select2.js' %}"></script>
+<script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready( function () {
+    $('#myTable').DataTable();
+  } );
+</script>
+<!-- End custom js for this page -->

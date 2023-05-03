@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'images/aaaa.png' %}" />
+  </head>
+  <style>
+ 
+    /*====================== 404 page =======================*/
+    .four_zero_four_bg h1 {
+        font-size: 80px;
+        text-align: center;
+   }
+   .four_zero_four_bg {
+    text-align: center;
+}
+   /* .page_404 img{*/
+   /*     width:100%;*/
+   /*}*/
+    .contant_box_404 {
+        margin-top: -50px;
+        text-align: center;
+   }
+   /* .four_zero_four_bg{*/
+   /*     background-image: url({% static 'images/not_found.png' %});*/
+   /*     height: 400px;*/
+   /*     background-repeat : no-repeat;*/
+
+   /*     background-position: center;*/
+   /*}*/
+    .four_zero_four_bg h1{
+        font-size:80px;
+   }
+  .h2 {
+    font-size: 65px;
+    margin: 0;
+}
+    .four_zero_four_bg h3{
+        font-size:80px;
+   }
+    .link_404{
+        color: #fff!important;
+        padding: 10px 20px;
+        background: #39ac31;
+        margin: 20px 0;
+        display: inline-block;
+   }
+    .contant_box_404{
+        margin-top:-50px;
+   }
+   body {
+    user-select: none;
+}
+
+@media only screen and (max-width: 767px) {
+    .four_zero_four_bg img{
+        width:100%;
+    }
+    .h2{
+        font-size:30px;
+    }
+}
+
+  </style>
+  <body>
+    <section class="page_404">
+      <div class="container">
+        <div class="">
+          <div class=" ">
+            <div class=" text-center">
+              <div class="four_zero_four_bg">
+                <!--<h1 class="text-center ">404</h1>-->
+                <img src="{% static 'images/not_found.png' %}">
+              </div>
+              <div class="contant_box_404">
+                <h3 class="h2"> There is no route found!! </h3>
+                <!--<p>the page you are looking for not avaible!</p>-->
+                <!--<a href="{% url 'doxer_admin:indexpage' %}" class="link_404">Go to Home</a>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script>
+    {% comment %} document.addEventListener('contextmenu', event => event.preventDefault()); {% endcomment %}
+    </script>
+</html>

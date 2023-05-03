@@ -1,0 +1,91 @@
+{% load static %}
+<html lang="en">
+  <head>
+    {% include 'home/head.html' %}
+  </head>
+  <style>
+    .map-container {
+      height: 100%;
+    }
+    #map-route {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  <body>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          ...
+        </div>
+      </div>
+    </div>
+    <div hidden>
+      {% include 'home/header.html' %}
+    </div>
+    <div class="map-container">
+      <div id="map-route" currentposition={{lat2}} currentposition2={{lng2}}></div>
+    </div>
+    
+  </body>
+  <script type="text/javascript">
+    var google_api_key = "{{google_api_key|safe}}";
+    var lat_a = {{lat_a|safe}};
+    var long_a = {{long_a|safe}};
+    var lat_b = {{lat_b|safe}};
+    var long_b = {{long_b|safe}};
+    var origin = "{{origin|safe}}";
+    var destination = "{{destination|safe}}";
+    var directions = {{directions|safe}};
+    var rideid = {{rid|safe}};
+    var time = '{{directions.duration}}';
+    var status = '{{status|safe}}';
+    var car = '{{car|safe}}';
+    var mydata = {'rid' : rideid, csrfmiddlewaretoken : '{{ csrf_token }}'};
+    $(document).ready(function(){
+        if(status == "O"){
+            console.log('Distance Between',status);
+            setInterval(function(){
+                var url = window.location.href;
+                // url: "{% url 'doxer_admin:Incityride_Map' %}", 
+                $.ajax({
+                type: "POST",
+                url: url, 
+                data : mydata,
+                // handle a successful response
+                success: function (results) {
+                        $("#map-route").attr('currentposition',results.current_lat);
+                        $("#map-route").attr('currentposition2',results.current_lng);
+                        $("#map-route").attr('status',results.current_status);
+                },
+                error: function () {
+                    alert("Server Not Responde.");
+                }
+                });
+            },1000);
+        }
+        if(status == "P"){
+            var url = window.location.href;
+            // url: "{% url 'doxer_admin:Incityride_Map' %}", 
+            $.ajax({
+                type: "POST",
+                url: url, 
+                data : {'rid' : rideid,'time' : time,"km" : directions.distance, csrfmiddlewaretoken : '{{ csrf_token }}'},
+                  // handle a successful response
+                success: function (data) {
+                    console.log('Distance Between',directions.distance);
+                },
+                error: function () {
+                    console.log('fail');
+                }
+            });
+          // setInterval(function(){
+          // },1000);
+        }
+    });
+  </script>
+  <script>
+    {% include 'ajax/map_direction.js' %}
+  </script>
+
+</html>

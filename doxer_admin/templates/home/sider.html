@@ -1,0 +1,72 @@
+{% load static %}
+<style>
+  
+ ul.nav{
+    position: fixed;
+    width: inherit;
+  }
+</style>
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <br>
+  <br>
+  <br>
+<ul class="nav">
+  <!--li class="nav-item nav-profile">
+    <a href="javascript:void(0);" class="nav-link">
+      <div class="profile-image">
+        <img class="img-xs rounded-circle" src="{% static 'images/faces/face8.jpg' %}" alt="profile image">
+        <div class="dot-indicator bg-success"></div>
+      </div>
+      <div class="text-wrapper">
+        <p class="profile-name">Allen Moreno</p>
+        <p class="designation">Administrator</p>
+      </div>
+      <div class="icon-container">
+        <i class="icon-bubbles"></i>
+        <div class="dot-indicator bg-danger"></div>
+      </div>
+    </a>
+  </li-->
+
+  <li class="nav-item nav-category"><span class="nav-link">Dashboard</span></li>
+    <li class="nav-item {% if t1 == '1' %}active {% endif %}">
+    <a class="nav-link" href="{% url 'doxer_admin:indexpage' %}">
+      <span class="menu-title">Dashboard</span>
+      <i class="icon-screen-desktop menu-icon"></i>
+    </a>
+  </li>
+  <li class="nav-item nav-category"><span class="nav-link">Vehicles</span></li>
+    <li class="nav-item {% if t1 == '2' %} active {% endif %}">
+    <a class="nav-link" href="{% url 'doxer_admin:allcars' %}">
+      <span class="menu-title">All Vehicles Entry</span>
+      <i class="icon-globe menu-icon"></i>
+    </a>
+  </li>
+    <li class="nav-item {% if t1 == '6' %} active {% endif %}">
+    <a class="nav-link" href="{% url 'doxer_admin:manage_brand' tt='Cars' %}">
+      <span class="menu-title">Manage Comapany & Model</span>
+      <i class="icon-globe menu-icon"></i>
+    </a>
+  </li>
+  <li class="nav-item nav-category"><span class="nav-link">Users</span></li>
+  <li class="nav-item {% if t1 == '3' %}active {% endif %}">
+    <a class="nav-link" href="{% url 'doxer_admin:alldrivers' %}">
+      <span class="menu-title">Drivers</span>
+      <i class="icon-layers menu-icon"></i>
+    </a>
+  </li>
+  <li class="nav-item {% if t1 == '4' %}active {% endif %}">
+    <a class="nav-link" href="{% url 'doxer_admin:allpassenger' %}">
+      <span class="menu-title">Passengers</span>
+      <i class="icon-user menu-icon"></i>
+    </a>
+  </li>
+  <li class="nav-item nav-category"><span class="nav-link">Rides</span></li>
+    <li class="nav-item {% if t1 == '5' %} active {% endif %}">
+    <a class="nav-link" href="{% url 'doxer_admin:allrides' %}">
+      <span class="menu-title">All Rides</span>
+      <i class="icon-globe menu-icon"></i>
+    </a>
+  </li>
+</ul>
+</nav>

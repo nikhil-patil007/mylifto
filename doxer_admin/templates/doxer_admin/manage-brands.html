@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> {% include 'home/head.html' %} </head>
+  <style>
+    #contact_form label {
+      text-align: left;
+      margin-right: 60%;
+      color: red;
+    }
+
+    img {
+      width: 550px;
+      height: 400px;
+    }
+    .car {
+        width: 100px !important;
+        height: 60px !important;
+    }
+    div#DataTables_Table_0_filter {
+        display: none;
+    }
+    button.swal2-confirm.swal2-styled {
+        background: red !important;
+    }
+  </style>
+  <body id='bodys'>
+    <div class="container-scroller">
+      <!-- partial:../../partials/_navbar.html --> {% include 'home/header.html' %}
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html --> {% include 'home/sider.html' %}
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title"> All {{type}} Brands & Models </h3>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item" style='color:green;'>
+                    <b>Manages </b>
+                  </li>
+                  <li class="breadcrumb-item active" aria-current="page">{{type}}</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="breadcrumb justify-content-right">
+                      <li><a class='btn btn-sm btn-info btn-rounded' href="{% url 'doxer_admin:manage_brand' tt="Cars" %}">Cars</a>&nbsp;</li>
+                      <li><a class='btn btn-sm btn-info btn-rounded' href="{% url 'doxer_admin:manage_brand' tt="Trucks" %}">Trucks</a>&nbsp;</li>
+                      <li><a class='btn btn-sm btn-info btn-rounded' href="{% url 'doxer_admin:manage_brand' tt="Bike" %}">Bikes</a>&nbsp;</li>
+                      <li><a class='btn btn-sm btn-info btn-rounded' href="{% url 'doxer_admin:manage_brand' tt="Auto" %}">Auto</a>&nbsp;</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="breadcrumb justify-content-end">
+                        <li><a class='btn btn-sm btn-success btn-rounded modelaopen' data="modalBrandForm">Add Brands</a>&nbsp;</li>
+                        <li><a class='btn btn-sm btn-success btn-rounded modelaopen' data="modalModelForm">Add Models</a>&nbsp;</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">{{type}} Brands</h4>
+                    <table class="table table-striped table-hover myTable">
+                        <thead>
+                          <tr>
+                            <th class="font-weight-bold"> ID </th>
+                            <th class="font-weight-bold"> Brands </th>
+                            <th class="font-weight-bold"> Action </th>
+                          </tr>
+                        </thead id="tests-table">
+                        </tbody>
+                        {% for i in brand %}
+                            <tr>
+                                <td> {{i.id}}</td>
+                                <td> {{i.brand}} </td>
+                                <td> <button class="btn btn-sm btn-danger btn-rounded" id="link" href="{% url 'doxer_admin:DeteleVehical_brand' tt=type data=i.id %}"><i class="icon-trash"></i></button> </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">{{type}} Models</h4>
+                    <table class="table table-striped table-hover myTable">
+                        <thead>
+                          <tr>
+                            <th class="font-weight-bold"> ID </th>
+                            <th class="font-weight-bold"> Models Image </th>
+                            <th class="font-weight-bold"> Models </th>
+                            <th class="font-weight-bold"> Action </th>
+                          </tr>
+                        </thead id="tests-table">
+                        </tbody>
+                        {% for i in Cars %}
+                            <tr>
+                                <td> {{i.id}}</td>
+                                <td> {% if i.photo_of_vehicle %} <img src="{{i.photo_of_vehicle.url}}" class='car' alt='ProfileImage' /> {% endif %} </td>
+                                <td> {{i.cars}} </td>
+                                <td> <button class="btn btn-sm btn-danger btn-rounded" id="link" href="{% url 'doxer_admin:DeteleCar_name' tt=type data=i.id %}"><i class="icon-trash menu-icon"></i></button> </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+          </div>
+          <div class="modal fade" id="modalBrandForm" tabindex="-1" role="dialog" aria-labelledby="my_modalLabel">
+            <div class="modal-dialog" role="dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Add {{type}} Brands Form</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form class="forms-sample" id="Brandformdata" method="POST" enctype="multipart/form-data">
+                          <div class="form-group">
+                            <label for="exampleInputName1">Brand Name</label>
+                            <input type="text" class="form-control" id="Brand_name" name="Brand_name" placeholder="Name">
+                            <div class="invalid-feedback" id="Brand_nameerror"></div>
+                          </div>
+                          <button type="submit" class="btn btn-success mr-2">Submit</button>
+                          <button type="reset" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade bd-example-modal-lg" style='height:100vh;width:100%' id="modalModelForm" tabindex="-1" role="dialog" aria-labelledby="my_modalLabel">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" >Add {{type}} Models Form</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                 <form class="forms-sample needs-validation" action="{% url 'doxer_admin:add_vehical_store' tt=type %}" novalidate id="Modelformdata" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                      <div class="form-group">
+                        <label for="exampleInputName1">Model Name</label>
+                        <input type="text" class="form-control" id="model_name" name="model_name" placeholder="Name" required>
+                        <div class="invalid-feedback" id="model_nameerror">Please Add Model Name</div>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Select Company Name</label>
+                        <select class="form-control" id="company_name" name="company_name" required>
+                          <option selected disabled value="">Select Company Name</option>
+                          {% for i in brand %}
+                          <option value="{{i.id}}">{{i.brand}}</option>
+                          {% endfor %}
+                        </select>
+                        <div class="invalid-feedback" id="company_nameerror">Please Select Company Name</div>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputCity1">Model Image</label>
+                        <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*" required>
+                        <div class="invalid-feedback" id="model_imageerror">Please Upload Model Image</div>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleTextarea1">Models Colors</label>
+                        <input type="hidden" name="colordrop" id="hidedcolor" value="0">
+                        <select class="form-control" id="colordrop" multiple name="colordrop1" required>
+                          {% for i in colors %}
+                            <option value="{{i.id}}">{{i.vehical_color}}</option>
+                          {% endfor %}
+                        </select>
+                        <div class="invalid-feedback" id="colordroperror">Please Select Colors For Model</div>
+                      </div>
+                      {% if type == "trucks" or type == "Trucks" %}
+                      <div class="form-group">
+                        <label for="exampleTextarea1">Models Dimension</label>
+                        <input type="hidden" name="dimensiondrop" id="hidedim" value="0">
+                        <select class="form-control" id="dimensiondrop" multiple name="dimensiondrop1" required>
+                          {% for i in dimension %}
+                            <option value="{{i.id}}">{{i.dimension}}</option>
+                          {% endfor %}
+                        </select>
+                        <div class="invalid-feedback" id="dimensiondroperror">Please Add dimensiondrop</div>
+                      </div>
+                      {% else %}
+                      <input type="hidden" name="dimensiondrop">
+                      {% endif %}
+                      <button type="submit" class="btn btn-success mr-2">Submit</button>
+                      <button type="reset" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html --> 
+          {% include 'home/foot.html' %} 
+      <script>
+      $(document).on('click', '#link', function(e) {
+        var href = $(this).attr('href');
+        console.log('passs click button',href);
+        swal({
+        title: "Are you sure?", 
+        // text: "You will be redirected to "+ href, 
+        type: "warning",
+        confirmButtonText: "Delete",
+        showCancelButton: true
+        })
+          .then((result) => {
+          if (result.value) {
+              window.location = href;
+          } else if (result.dismiss === 'cancel') {
+              swal(
+                'Cancelled',
+                '',
+                'error',
+              )
+              // swal(
+              //   'Cancelled',
+              //   'Your stay here :)',
+              //   'error'
+              // )
+          }
+        })
+    });
+      </script>
+      <script>
+        $( "#colordrop" ).change(function() {
+          var rate = $(this ).val();
+          $("#hidedcolor").val(rate);
+        });
+        
+        $( "#dimensiondrop" ).change(function() {
+          var rate = $(this ).val();
+          $("#hidedim").val(rate);
+        //   console.log("slect now",rate);
+        });
+      (function () {
+          'use strict'
+        
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.querySelectorAll('.needs-validation')
+        
+          // Loop over them and prevent submission
+          Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+              form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                  event.preventDefault()
+                  event.stopPropagation()
+                }
+        
+                form.classList.add('was-validated')
+              }, false)
+            })
+        })()
+            $(document).ready( function () {
+                $('.myTable').DataTable();
+            } );
+            $(document).ready( function () {
+                $('.modelaopen').on('click',function(){
+                    var id = $(this).attr('data');
+                    $("#"+id).modal('show');
+                });
+            } );
+            $(document).ready( function () {
+                $("#Brand_name").keyup(function() {
+                    if($(this).val()){
+                        $("#Brand_nameerror").removeAttr("style");
+                    }
+                });
+            } );
+            $(document).ready( function () {
+                $('#Brandformdata').on('submit',function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        type : "POST", 
+                        url: "{% url 'doxer_admin:add_brand_store' tt=type %}",
+                        data: {
+                         Brand_name : $('#Brand_name').val(),
+                         csrfmiddlewaretoken: '{{ csrf_token }}',
+                         dataType: "json",
+                        },
+                        success: function(data){
+                           console.log('success',data)
+                           if(data.status == 0){
+                               $("#Brand_nameerror").text(data.msg);
+                               $("#Brand_nameerror").attr("style","display:block !important");
+                           }
+                           if(data.status == 1){
+                               location.reload();
+                           }
+                        },
+                        failure: function() {
+                        }
+                    });
+                });
+            } );
+            // $(document).ready(function() {
+            //     $('#Modelformdata').bootstrapValidator({
+            //         feedbackIcons: {
+            //             valid: 'glyphicon glyphicon-ok',
+            //             invalid: 'glyphicon glyphicon-remove',
+            //             validating: 'glyphicon glyphicon-refresh'
+            //         },
+            //         fields: {
+            //             avatar: {
+            //                 validators: {
+            //                     file: {
+            //                         extension: 'jpeg,png',
+            //                         type: 'image/jpeg,image/png',
+            //                         maxSize: 2048 * 1024,
+            //                         message: 'The selected file is not valid'
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     });
+            // });
+    </script>
+  </body>
+</html>

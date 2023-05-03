@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> {% include 'home/head.html' %} </head>
+  <style>
+    #contact_form label {
+      text-align: left;
+      margin-right: 60%;
+      color: red;
+    }
+
+    img {
+      width: 550px;
+      height: 400px;
+    }
+  </style>
+  <body id='bodys'>
+    <div class="container-scroller">
+      <!-- partial:../../partials/_navbar.html --> {% include 'home/header.html' %}
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html --> {% include 'home/sider.html' %}
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title"> All Drivers </h3>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item" style='color:green;'>
+                    <b>Users</b>
+                  </li>
+                  <li class="breadcrumb-item active" aria-current="page">Drivers</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div role="alert" id='errormsg'></div> 
+                    {% comment %} <h4 class="card-title">All Drivers</h4> {% endcomment %} {% comment %} <table class="table table-hover"> {% endcomment %} 
+                      <table class="table table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th class="font-weight-bold"> ID </th>
+                            <th class="font-weight-bold"> Driver's Name </th>
+                            <th class="font-weight-bold"> Email </th>
+                            <th class="font-weight-bold"> Contact Number </th>
+                            <th class="font-weight-bold"> Gender </th>
+                            <th class="font-weight-bold"> City </th>
+                            <th class="font-weight-bold"> Fare Per KM </th>
+                            <th class="font-weight-bold"> Status </th>
+                            <th class="font-weight-bold"> Documents </th>
+                            <!-- <th class="font-weight-bold">
+                              <center> Action </center>
+                            </th> -->
+                            <th class="font-weight-bold"> Create At </th>
+                          </tr>
+                        </thead>
+                        <!--tbody id='spinner'><tr><th colspan=10><center><div class='spinner-border' role="status"></div></center></th></tr></tbody-->
+                        <tbody id="tests-table"> {% if data %} {% for i in data %} 
+                          <tr>
+                            <td> {{i.id}}</td>
+                            <td>
+                              <img src="{{i.pro_image.url}}" alt='ProfileImage' />
+                              <span class='pl-2'>{{i.name}}</span>
+                            </td>
+                            <td>{{i.email}}</td>
+                            <td>{{i.contact_no}}</td>
+                            <td>{{i.gender}}</td>
+                            <td>{{i.city}}</td>
+                            <th id='pr{{i.id}}'>₹ {{i.fare_per_km}}</th>
+                            <td id='{{i.id}}'> {% if i.status == 'Active' %} <div class='onoffswitch'>
+                                <input type='checkbox' name='onoffswitch' data-sid='{{i.id}}' class='check-blocks onoffswitch-checkbox' id='myonoffswitch{{i.id}}' checked>
+                                <label class='onoffswitch-label' for='myonoffswitch{{i.id}}'>
+                                  <div class='onoffswitch-inner'></div>
+                                  <div class='onoffswitch-switch'></div>
+                                </label>
+                              </div> {% endif %} {% if i.status == 'Deactive' %} <div class='onoffswitch'>
+                                <input type='checkbox' name='onoffswitch' data-sid='{{i.id}}' class='check-blocks onoffswitch-checkbox' id='myonoffswitch{{i.id}}'>
+                                <label class='onoffswitch-label' for='myonoffswitch{{i.id}}'>
+                                  <div class='onoffswitch-inner'></div>
+                                  <div class='onoffswitch-switch'></div>
+                                </label>
+                              </div> {% endif %} </td>
+                            <td class='documentviewdiv'>
+                              <div class='doscumentviewdiv'>
+                                <a class='documentview' data-target='#IdProofemodel' data-toggle='modal' data='{{i.id}}'>
+                                  <div class='face-pile__images-container'>
+                                    <img class='artdeco-entity-image artdeco-entity-image--circle-1 face-pile__image face-pile__image--1 lazy-loaded' alt='IdProofe2' src='{{i.image2.url}}'>
+                                    <img class='artdeco-entity-image artdeco-entity-image--circle-1 face-pile__image face-pile__image--1 lazy-loaded' alt='IdProofe1' src='{{i.image1.url}}'>
+                                  </div>
+                                </a>
+                              </div>
+                            </td>
+                            <td>
+                              <button class='btn btn-success btn-rounded btn-sm edit-btn' data-target='#modelsget' data-toggle='modal' class='identifyingClass' data-sid="{{i.id}}">
+                                <i class='icon-note btn-icon-append'></i>
+                              </button>
+                            </td>
+                          </tr>
+                           {% endfor %} {% else %} <tr>
+                            <th colspan=10>
+                              <center> No Data Founded </center>
+                            </th>
+                          </tr> {% endif %} </tbody>
+                      </table>
+                  </div>
+                  <div class="page-header">
+                    <p id='entries' class='mb-0'>
+                      Showing <a id='et1'> 0  </a> to <a id='et2'> 0 </a> of <a id='totale'> 0 </a> Entries
+                    </p>
+                    <nav aria-label="breadcrumb"><ul class="pagination justify-content-center" id='credit' current=''></ul></nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="modelsget" tabindex="-1" role="dialog" aria-labelledby="my_modalLabel">
+            <div class="modal-dialog" role="dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="myModalLabel"></h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div id="contact_form">
+                    <label for="name" id="error"></label>
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-info text-white">₹</span>
+                    </div>
+                    <input type="Number" id="price" class="form-control" aria-label="Amount (to the nearest dollar)">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <div class="input-group progress" id='proces' hidden>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" id='pbar' aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                  </div>
+                  <button type="reset" class="btn btn-secondary canbtn" data-dismiss="modal">Cancel</button>
+                  <button type="button" value='Save' class="btn btn-success saveprice" id='saveprice' herfs="{% url 'doxer_admin:updatepriceb' %}">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade bd-example-modal-lg" style='height:100vh;width:100%' id="IdProofemodel" tabindex="-1" role="dialog" aria-labelledby="my_modalLabel">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="IdProofename"></h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="container-fluid">
+                    <div class="row center" id="IdProofe">
+                          
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html --> {% include 'home/foot.html' %} <script>
+            {% comment %} {% include 'ajax/data.js' %}  {% endcomment %}
+              {% include 'ajax/driver.js' %}
+          </script>
+  </body>
+</html>
